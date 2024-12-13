@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Profile</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Details</button>
+</form>
+
+<h3>Status: {{ profile.status }}</h3>
+{% if profile.status == "Rejected" %}
+<p>Your details were rejected. Please update and resubmit.</p>
+{% elif profile.status == "Approved" and profile.ecard_generated %}
+<p>Your E-Card is being generated. Please check back soon.</p>
+{% else %}
+<p>Your documents are in process. Please wait for admin approval.</p>
+{% endif %}
+{% endblock %}
